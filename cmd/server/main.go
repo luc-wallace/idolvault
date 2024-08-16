@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -23,7 +24,21 @@ import (
 	spotifyauth "github.com/markbates/goth/providers/spotify"
 )
 
+var dev bool
+
+func init() {
+	flag.BoolVar(&dev, "dev", false, "developer mode")
+}
+
 func main() {
+	flag.Parse()
+
+	if dev {
+		fmt.Println("starting app in developer mode, omit the -dev flag for production mode")
+	} else {
+		fmt.Println("starting app in production mode, use the -dev flag for developer mode")
+	}
+
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("error loading .env file\n")
@@ -49,6 +64,7 @@ func main() {
 	cookieStore := sessions.NewCookieStore([]byte(os.Getenv("SESSION_SECRET")))
 	cookieStore.MaxAge(60 * 60 * 24)
 	cookieStore.Options.Path = "/"
+	cookieStore.Options.Secure = !dev
 	gothic.Store = cookieStore
 
 	goth.UseProviders(
@@ -73,6 +89,7 @@ func main() {
 	sessionManager := scs.New()
 	sessionManager.Lifetime = 2 * 24 * time.Hour
 	sessionManager.Store = pgxstore.New(conn.Pool())
+	sessionManager.Cookie.Secure = !dev
 
 	fmt.Println("running on port 8080")
 	r := web.New(conn, sessionManager)
