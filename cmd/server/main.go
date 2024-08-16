@@ -72,6 +72,7 @@ func main() {
 	cookieStore.MaxAge(60 * 60 * 24)
 	cookieStore.Options.Path = "/"
 	cookieStore.Options.Secure = !dev
+	cookieStore.Options.HttpOnly = true
 	gothic.Store = cookieStore
 
 	var baseCallbackURI string
