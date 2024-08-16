@@ -1,0 +1,65 @@
+{{ define "head" }}
+  <style>
+    .songs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      width: 65%;
+      margin-top: 1.5rem;
+    }
+
+    .song {
+      display: flex;
+      align-items: center;
+    }
+
+    .song img {
+      width: 50px;
+      height: 50px;
+      border-radius: 0.5rem;
+      margin-right: 0.5rem;
+    }
+
+    .song span {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .song * {
+      margin: 0;
+    }
+
+    .last-updated {
+      margin: 0;
+    }
+  </style>
+{{ end }}
+
+{{ define "tab-content" }}
+  <img class="group-image" src="{{ .Group.ImageURL }}" alt="Photo of {{ .Group.Name }}" />
+  <section>
+    <h2>Spotify Stats</h2>
+    <h3>Followers</h3>
+    <p>{{ .Followers }}</p>
+    <h3>Popularity</h3>
+    <p>{{ .Group.Popularity }}%</p>
+    <h3>Genres</h3>
+    <p>{{ .Genres }}</p>
+  </section>
+  <section>
+    <h2>Top Songs</h2>
+    <div class="songs">
+      {{ range $song := .TopSongs }}
+        <div class="song">
+          <img src="{{ $song.AlbumImageURL }}" />
+          <span>
+            <h3>{{ $song.Name }}</h3>
+            <p>{{ $song.Popularity }}% popularity</p>
+          </span>
+        </div>
+      {{ end }}
+    </div>
+  </section>
+  <p class="last-updated">Stats last updated {{ .UpdatedAt }} (UTC)</p>
+{{ end }}

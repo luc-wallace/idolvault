@@ -1,0 +1,52 @@
+{{ define "title" }}{{ .User.Username }}{{ end }}
+
+{{ define "header" }}
+  {{ block "head" . }}{{ end }}
+  <link rel="stylesheet" href="/static/css/tabs-switcher.css" />
+  <link rel="stylesheet" href="/static/css/user.css" />
+{{ end }}
+
+{{ define "content" }}
+  <div class="header">
+    <img src="{{ .User.AvatarURL }}" alt="{{ .User.Username }} profile picture" />
+    <h1>{{ .User.Username }}</h1>
+
+    {{ if .Self }}
+      <a class="button" href="/logout">Log out</a>
+    {{ else if .User.IsFollowing }}
+      <button
+        class="button unfollow"
+        hx-delete="/api/users/{{ .User.Username }}/followers"
+        hx-swap="outerHTML"
+        hx-target="this"
+      >
+        Unfollow
+      </button>
+    {{ else if .Session.LoggedIn }}
+      <button
+        class="button follow"
+        hx-post="/api/users/{{ .User.Username }}/followers"
+        hx-swap="outerHTML"
+        hx-target="this"
+      >
+        Follow
+      </button>
+    {{ end }}
+  </div>
+  <div class="tabs-switcher">
+    <a href="/users/{{ .User.Username }}" class="{{ if .InfoPage }}selected{{ end }}">INFO</a>
+    <a
+      href="/users/{{ .User.Username }}/followers"
+      class="{{ if .FollowersPage }}selected{{ end }}"
+    >
+      FOLLOWERS
+    </a>
+    <a href="/users/{{ .User.Username }}/bias" class="{{ if .BiasesPage }}selected{{ end }}">
+      BIAS
+    </a>
+    <a href="/users/{{ .User.Username }}/cards" class="{{ if .CardsPage }}selected{{ end }}">
+      CARDS
+    </a>
+  </div>
+  <div class="tabs-content">{{ block "tab-content" . }}{{ end }}</div>
+{{ end }}

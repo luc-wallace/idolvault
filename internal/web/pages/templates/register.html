@@ -1,0 +1,40 @@
+{{ define "title" }}Register{{ end }}
+
+{{ define "header" }}
+  <link rel="stylesheet" href="/static/css/register.css" />
+{{ end }}
+
+{{ define "content" }}
+  <h1>Complete Registration</h1>
+  <form id="register-form" action="/auth/users" method="post">
+    <label for="username">Enter username:</label>
+    <span class="action-row">
+      <input
+        type="text"
+        id="username"
+        name="username"
+        placeholder="Enter username..."
+        spellcheck="false"
+        autocomplete="username"
+        hx-trigger="keyup changed delay:500ms"
+        hx-get="/api/users/usernamestatus"
+        hx-target="#username-error"
+      />
+      <span id="username-error"></span>
+    </span>
+    <span id="username-error"></span>
+    <label for="bio">Enter bio (optional):</label>
+    <textarea
+      placeholder="Tell the world about yourself..."
+      autocomplete="off"
+      form="register-form"
+      id="bio"
+      name="bio"
+      maxlength="300"
+    ></textarea>
+    <span class="action-row">
+      <input type="submit" value="Submit" />
+      <a class="button" href="/logout">Cancel</a>
+    </span>
+  </form>
+{{ end }}

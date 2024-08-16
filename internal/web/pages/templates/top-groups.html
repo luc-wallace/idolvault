@@ -1,0 +1,17 @@
+{{ define "title" }}Top Groups{{ end }}
+
+{{ define "header" }}
+  <link rel="stylesheet" href="/static/css/top-groups.css" />
+{{ end }}
+
+{{ define "content" }}
+  <h1>Top Groups</h1>
+  <div class="groups">
+    {{ range $group := .Groups }}
+      <a href="/groups/{{ $group.Name }}">
+        <img src="{{ $group.ImageURL }}" alt="Photo of {{ $group.Name }}" />
+        <h2>{{ $group.Name }}</h2>
+      </a>
+    {{ end }}
+  </div>
+{{ end }}

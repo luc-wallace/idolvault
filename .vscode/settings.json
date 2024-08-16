@@ -1,0 +1,9 @@
+{
+  "[go]": {
+    "files.autoSave": "off"
+  },
+  "[html]": {
+    "files.autoSave": "off"
+  },
+  "cSpell.enabled": false
+}

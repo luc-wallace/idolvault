@@ -1,0 +1,43 @@
+{{ define "title" }}Log in{{ end }}
+
+{{ define "header" }}
+  <style>
+    .login-button {
+      background-color: var(--bg-2);
+      color: var(--fg-2);
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      width: max-content;
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .login-button i {
+      color: var(--fg-2);
+      font-size: 2rem;
+      margin-right: 1rem;
+    }
+  </style>
+{{ end }}
+
+{{ define "content" }}
+  <h1>Log in</h1>
+  {{ if .Error }}
+    <p>{{ .Message }}</p>
+  {{ end }}
+  <a class="login-button" href="/auth?provider=google">
+    <i class="fa-brands fa-google"></i>
+    Log in with Google
+  </a>
+  <a class="login-button" href="/auth?provider=discord">
+    <i class="fa-brands fa-discord"></i>
+    Log in with Discord
+  </a>
+  <a class="login-button" href="/auth?provider=spotify">
+    <i class="fa-brands fa-spotify"></i>
+    Log in with Spotify
+  </a>
+{{ end }}

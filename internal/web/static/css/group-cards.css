@@ -1,0 +1,43 @@
+.accordion {
+  background-color: var(--bg-4);
+  margin-bottom: 0.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.accordion.active {
+  background-color: var(--bg-4);
+  margin-bottom: 0;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.panel {
+  padding-top: 0.5rem;
+  background-color: var(--bg-4);
+  margin-bottom: 0.5rem;
+  border-radius: 0 0 0.5rem 0.5rem;
+  display: none;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.card.owned .card-status {
+  background-color: #30ce45;
+}
+
+label {
+  margin-right: 0.25rem;
+}
+
+option {
+  color: var(--fg-2);
+  font-size: 1rem;
+}
+
+.filters {
+  margin-bottom: 1rem;
+}

@@ -1,0 +1,94 @@
+{{ define "head" }}
+  <link rel="stylesheet" href="/static/css/cards.css" />
+
+  <style>
+    .card-collection {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .card img {
+      filter: brightness(1);
+    }
+
+    .card .card-status {
+      background-color: #f72424;
+      color: #ffffff;
+    }
+
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+
+    .filters {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    button {
+      background-color: var(--bg-4);
+    }
+  </style>
+{{ end }}
+
+{{ define "tab-content" }}
+  <section>
+    <h2>Cards</h2>
+    {{ if not .Empty }}
+      <div class="actions">
+        <p>Group:</p>
+        <select name="group" id="group" hx-get="/content/groupfilters" hx-target="#filters">
+          <option value="All">All</option>
+          {{ range $group := .Groups }}
+            <option value="{{ $group }}">{{ $group }}</option>
+          {{ end }}
+        </select>
+        <span class="filters" id="filters"></span>
+        <button
+          hx-get="/content/users/{{ .User.Username }}/cards"
+          hx-include="select"
+          hx-target="#card-collection"
+        >
+          Show
+        </button>
+      </div>
+    {{ end }}
+    <div class="card-collection" id="card-collection">
+      {{ if .Empty }}
+        {{ if .Self }}
+          <p>You have not favourited any cards yet.</p>
+        {{ else }}
+          <p>This user has not favourited any cards yet.</p>
+        {{ end }}
+      {{ end }}
+      {{ range $card := .Cards }}
+        <div
+          class="card"
+          {{ if $.Self }}
+            hx-put="/api/cards/claim" hx-vals='{"card_id": "{{ $card.ID }}"}' hx-swap="delete"
+          {{ end }}
+        >
+          <div class="card-img-container">
+            <img src="/static/img/cards/{{ $card.ID }}.jpg" />
+            {{ if $.Self }}
+              <div class="card-status">
+                <i class="fa-solid fa-x"></i>
+              </div>
+            {{ end }}
+          </div>
+          <a href="/cards/{{ $card.ID }}">
+            <h3>{{ $card.IdolName }}</h3>
+            <p>{{ $card.Variant }}</p>
+          </a>
+        </div>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

@@ -1,0 +1,14 @@
+<p>Member:</p>
+<select name="idol" id="idol">
+  <option value="All">All</option>
+  {{ range $idol := .Members }}
+    <option value="{{ $idol.StageName }}">{{ $idol.StageName }}</option>
+  {{ end }}
+</select>
+<p>Collection:</p>
+<select name="collection" id="collection">
+  <option value="All">All</option>
+  {{ range $collection := .Collections }}
+    <option value="{{ $collection.Name }}">{{ $collection.Name }}</option>
+  {{ end }}
+</select>

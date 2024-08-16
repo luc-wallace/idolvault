@@ -1,0 +1,26 @@
+{{ if .Empty }}
+  <p>No cards found.</p>
+{{ else }}
+  {{ range $card := .Cards }}
+    <div
+      class="card {{ if $card.Owned }}owned{{ end }}"
+      hx-put="/api/cards/claim"
+      hx-vals='{"card_id": "{{ $card.ID }}"}'
+      hx-swap="none"
+      hx-on="htmx:afterOnLoad: toggleImageClass(this, event.detail)"
+    >
+      <div class="card-img-container">
+        <img src="/static/img/cards/{{ $card.ID }}.jpg" />
+        {{ if $.Session.LoggedIn }}
+          <div class="card-status">
+            <i class="fa-solid fa-check"></i>
+          </div>
+        {{ end }}
+      </div>
+      <a href="/cards/{{ $card.ID }}">
+        <h3>{{ $card.IdolName }}</h3>
+        <p>{{ $card.Variant }}</p>
+      </a>
+    </div>
+  {{ end }}
+{{ end }}

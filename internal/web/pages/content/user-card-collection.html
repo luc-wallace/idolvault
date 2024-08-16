@@ -1,0 +1,25 @@
+{{ if .Empty }}
+  <p>No cards found.</p>
+{{ else }}
+  {{ range $card := .Cards }}
+    <div
+      class="card"
+      {{ if $.Self }}
+        hx-put="/api/cards/claim" hx-vals='{"card_id": "{{ $card.ID }}"}' hx-swap="delete"
+      {{ end }}
+    >
+      <div class="card-img-container">
+        <img src="/static/img/cards/{{ $card.ID }}.jpg" />
+        {{ if $.Self }}
+          <div class="card-status">
+            <i class="fa-solid fa-x"></i>
+          </div>
+        {{ end }}
+      </div>
+      <a href="/cards/{{ $card.ID }}">
+        <h3>{{ $card.IdolName }}</h3>
+        <p>{{ $card.Variant }}</p>
+      </a>
+    </div>
+  {{ end }}
+{{ end }}

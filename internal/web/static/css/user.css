@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.header img {
+  border-radius: 50%;
+  width: 75px;
+  height: 75px;
+}
+
+.header a.button {
+  background-color: var(--bg-2);
+  color: var(--fg-2);
+}
+
+.button {
+  font-weight: 800;
+}
+
+.button.follow {
+  background-color: var(--bg-2);
+  color: var(--fg-2);
+}
+
+.button.unfollow {
+  background-color: var(--bg-3);
+  color: var(--fg-2);
+}

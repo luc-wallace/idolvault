@@ -1,0 +1,72 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.card a {
+  text-align: center;
+}
+
+.card h3 {
+  margin: 0;
+}
+
+.card img {
+  width: 100px;
+  border-radius: 0.5rem;
+  outline: 5px solid white;
+  outline-offset: -5px;
+  transition: 0.25s filter;
+}
+
+.card.owned img {
+  filter: brightness(1);
+}
+
+.card:hover img {
+  filter: brightness(0.8);
+}
+
+.card.unowned img {
+  filter: brightness(1) !important;
+}
+
+.card .card-img-container {
+  position: relative;
+}
+
+.card .card-status {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.card .card-status {
+  background-color: #ffffff;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  height: 1rem;
+  width: 1rem;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.card .card-status i {
+  display: none;
+  color: var(--fg-2);
+  font-size: 1rem;
+}
+
+.card.owned .card-status i {
+  display: block;
+}
+
+.card:hover .card-status,
+.card:hover i {
+  display: flex;
+}

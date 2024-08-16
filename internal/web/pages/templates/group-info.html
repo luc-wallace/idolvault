@@ -1,0 +1,33 @@
+{{ define "head" }}
+  <style>
+    .members-list {
+      width: 50%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+  </style>
+{{ end }}
+
+{{ define "tab-content" }}
+  <img class="group-image" src="{{ .Group.ImageURL }}" alt="Photo of {{ .Group.Name }}" />
+  <section>
+    <h2>Basic</h2>
+    <h3>Name</h3>
+    <p>{{ .Group.Name }}</p>
+    <h3>Country</h3>
+    <p>{{ .Group.Country }}</p>
+    <h3>Fandom</h3>
+    <p>{{ .Group.Fandom }}</p>
+  </section>
+  <section>
+    <h2>Members ({{ .MembersCount }})</h2>
+    <div class="members-list">
+      {{ range $idol := .Members }}
+        <a href="/groups/{{ $.GroupID }}/members/{{ $idol.StageName }}">
+          <h3>{{ $idol.StageName }}</h3>
+          <p>{{ $idol.RealName }}</p>
+        </a>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ block "title" . }}Welcome{{ end }} - IDOLVAULT</title>
+    <link rel="stylesheet" href="/static/css/base.css" />
+    {{ block "header" . }}{{ end }}
+    <script src="/static/js/index.js" defer></script>
+    <script
+      src="https://unpkg.com/htmx.org@2.0.1"
+      integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <a class="title" href="/">IDOLVAULT</a>
+      {{ if .Session.LoggedIn }}
+        <a class="user" href="/users/{{ .Session.User.Username }}">
+          <img
+            src="{{ .Session.User.AvatarURL }}"
+            alt="{{ .Session.User.Username }} profile picture"
+          />
+          {{ .Session.User.Username }}
+        </a>
+      {{ else if .Session.Registering }}
+      {{ else }}
+        <a class="user" href="/login">Log in</a>
+      {{ end }}
+    </header>
+    <nav>
+      <a href="/">HOME</a>
+      <a href="/groups">GROUPS</a>
+      {{ if .Session.LoggedIn }}
+        <a href="/users/{{ .Session.User.Username }}/cards">MY CARDS</a>
+      {{ end }}
+    </nav>
+    {{ block "splash" . }}{{ end }}
+    <main>{{ block "content" . }}{{ end }}</main>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+{{ define "head" }}
+  <style>
+    .follower-container {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .follower {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .follower h3 {
+      margin: 0;
+    }
+
+    .follower img {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+    }
+
+    .follower span {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+{{ end }}
+
+{{ define "tab-content" }}
+  <section>
+    <h2>Followers ({{ .Count }})</h2>
+    <div class="follower-container">
+      {{ if .Empty }}
+        {{ if .Self }}
+          <p>You do not have any followers yet.</p>
+        {{ else }}
+          <p>This user does not have any followers yet.</p>
+        {{ end }}
+      {{ else }}
+        {{ range $user := .Followers }}
+          <a class="follower" href="/users/{{ $user.Username }}">
+            <img
+              src="/static/img/users/{{ $user.Username }}.png"
+              alt="{{ $user.Username }} profile picture"
+            />
+            <h3>{{ $user.Username }}</h3>
+          </a>
+        {{ end }}
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

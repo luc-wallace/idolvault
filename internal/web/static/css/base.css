@@ -1,0 +1,172 @@
+:root {
+  --bg-1: #ffffff;
+  --bg-2: #ff749a;
+  --bg-3: #d36d8a;
+  --bg-4: #ce5476;
+  --fg-1: #ff749a;
+  --fg-2: #ffffff;
+  --fg-3: #d2d2d2;
+  --fg-4: #ffffff;
+  --error: #691e1e;
+}
+
+body {
+  background-color: var(--bg-1);
+}
+
+* {
+  font-family: "Play", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+header {
+  position: relative;
+  width: 60%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+header a.title {
+  font-weight: 700;
+  font-size: 2.5rem;
+  margin: 0.75rem 0;
+  color: var(--fg-1);
+}
+
+header a.user {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  color: var(--fg-1);
+  font-weight: 700;
+}
+
+header a.user img {
+  width: 30px;
+  height: 30px;
+  margin-right: 0.25rem;
+  border-radius: 50%;
+}
+
+nav {
+  width: 100%;
+  background-color: var(--bg-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4.5rem;
+  gap: 3rem;
+}
+
+nav a {
+  color: var(--fg-2);
+  font-size: 1.25rem;
+  font-weight: 700;
+  position: relative;
+  padding: 0.15rem 0;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  transition: 0.2s;
+  background-color: var(--fg-2);
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+main {
+  width: 60%;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+}
+
+main * {
+  color: var(--fg-1);
+}
+
+input {
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+}
+
+button,
+.button {
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  transition: filter 0.25s;
+}
+
+button:hover,
+.button:hover,
+select:hover {
+  filter: brightness(0.9);
+}
+
+select {
+  background-color: var(--bg-3);
+  border: none;
+  color: var(--fg-2);
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  outline: none;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+  transition: filter 0.25s;
+}
+
+@media screen and (max-width: 1000px) {
+  header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  main {
+    width: 90%;
+  }
+
+  a.title {
+    margin-bottom: 0 !important;
+  }
+
+  header a.user {
+    position: unset;
+    margin-bottom: 1rem;
+  }
+}

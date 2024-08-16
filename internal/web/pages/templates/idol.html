@@ -1,0 +1,57 @@
+{{ define "title" }}{{ .Idol.StageName }}{{ end }}
+
+{{ define "header" }}
+  <link rel="stylesheet" href="/static/css/idol.css" />
+{{ end }}
+
+{{ define "content" }}
+  <div class="header">
+    <h1>{{ .Idol.StageName }} (Idol)</h1>
+    {{ if .Session.LoggedIn }}
+      {{ if .Idol.Bias }}
+        <button
+          class="button remove"
+          hx-delete="/api/groups/{{ .Idol.GroupName }}/members/{{ .Idol.StageName }}/bias"
+          hx-swap="outerHTML"
+          hx-target="this"
+        >
+          <i class="fa fa-xmark"></i>
+          Remove bias
+        </button>
+      {{ else }}
+        <button
+          class="button add"
+          hx-post="/api/groups/{{ .Idol.GroupName }}/members/{{ .Idol.StageName }}/bias"
+          hx-swap="outerHTML"
+          hx-target="this"
+        >
+          <i class="fa fa-add"></i>
+          Add bias
+        </button>
+      {{ end }}
+    {{ end }}
+  </div>
+  <div class="idol-info">
+    <section>
+      <h2>Basic</h2>
+      <h3>Stage Name</h3>
+      <p>{{ .Idol.StageName }}</p>
+      <h3>Member of</h3>
+      <a href="/groups/{{ .Idol.GroupName }}"><p>{{ .Idol.GroupName }}</p></a>
+      <h3>Country</h3>
+      <p>{{ .Idol.Country }}</p>
+    </section>
+    <section>
+      <h2>Personal</h2>
+      <h3>Real Name</h3>
+      <p>{{ .Idol.RealName }}</p>
+      <h3>Birthday</h3>
+      <p>{{ .Birthday }}</p>
+      <h3>MBTI</h3>
+      <p>{{ .Idol.MBTI }}</p>
+    </section>
+    <a class="button" href="/groups/{{ .Idol.GroupName }}/cards?idol={{ .Idol.StageName }}">
+      {{ .Idol.StageName }} photo cards
+    </a>
+  </div>
+{{ end }}

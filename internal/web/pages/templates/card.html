@@ -1,0 +1,61 @@
+{{ define "title" }}
+  {{ .Card.GroupName }} {{ .Card.IdolName }} {{ .Card.CollectionName }} {{ .Card.Variant }}
+{{ end }}
+
+{{ define "header" }}
+  <style>
+    .card-container img {
+      width: 200px;
+      outline: 1rem solid white;
+      outline-offset: -1rem;
+      border-radius: 0.5rem;
+    }
+
+    .card-container {
+      border-radius: 0.5rem;
+      padding: 1rem;
+      background-color: var(--bg-2);
+      display: flex;
+      gap: 2rem;
+    }
+
+    .card-container * {
+      color: var(--fg-2);
+    }
+
+    .card-details h2 {
+      margin: 0;
+    }
+
+    .card-details h3 {
+      margin-bottom: 0;
+    }
+
+    .card-details p {
+      margin-top: 0;
+    }
+  </style>
+{{ end }}
+
+{{ define "content" }}
+  <h1>{{ .Card.GroupName }} {{ .Card.IdolName }} {{ .Card.CollectionName }} {{ .Card.Variant }}</h1>
+  <div class="card-container">
+    <img
+      src="/static/img/cards/{{ .Card.ID }}.jpg"
+      alt="Photocard of {{ .Card.IdolName }} from {{ .Card.GroupName }} in {{ .Card.CollectionName }}, {{ .Card.Variant }} variant"
+    />
+    <div class="card-details">
+      <h2>Card details</h2>
+      <h3>Idol</h3>
+      <a href="/groups/{{ .Card.GroupName }}/members/{{ .Card.IdolName }}">{{ .Card.IdolName }}</a>
+      <h3>Group</h3>
+      <a href="/groups/{{ .Card.GroupName }}">{{ .Card.GroupName }}</a>
+      <h3>Collection</h3>
+      <a href="/groups/{{ .Card.GroupName }}/cards?collection={{ .Card.CollectionName }}">
+        {{ .Card.CollectionName }}
+      </a>
+      <h3>Variant</h3>
+      <p>{{ .Card.Variant }}</p>
+    </div>
+  </div>
+{{ end }}

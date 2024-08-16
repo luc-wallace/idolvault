@@ -1,0 +1,4 @@
+*.exe
+tmp
+.env
+/internal/web/static/img

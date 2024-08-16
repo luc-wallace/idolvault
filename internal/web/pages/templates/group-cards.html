@@ -1,0 +1,49 @@
+{{ define "head" }}
+  <link rel="stylesheet" href="/static/css/accordion.css" />
+  <link rel="stylesheet" href="/static/css/cards.css" />
+  <link rel="stylesheet" href="/static/css/group-cards.css" />
+  <script src="/static/js/accordion.js" defer></script>
+  <script src="/static/js/group-cards.js" defer></script>
+{{ end }}
+
+{{ define "tab-content" }}
+  <section>
+    {{ if not .Session.LoggedIn }}
+      <a href="/login" style="margin-bottom: 1rem;">Log in to save cards.</a>
+    {{ end }}
+    <form>
+      <div class="filters">
+        <label for="owned">Member:</label>
+        <select name="idol" id="idol">
+          <option value="All">All</option>
+          {{ range $idol := .Members }}
+            <option value="{{ $idol.StageName }}">{{ $idol.StageName }}</option>
+          {{ end }}
+        </select>
+        {{ if .Session.LoggedIn }}
+          <label for="owned">Status:</label>
+          <select name="owned" id="owned">
+            <option value="">All</option>
+            <option value="true">Owned</option>
+            <option value="false">Unowned</option>
+          </select>
+        {{ end }}
+      </div>
+
+      {{ range $coll := .Collections }}
+        <div
+          class="accordion"
+          hx-trigger="click[toggle(event.target)]"
+          hx-get="/content/groups/{{ $.GroupID }}/collections/{{ $coll.Name }}/cards"
+          hx-target="next .panel"
+          hx-swap="innerHTML"
+          hx-include="select"
+        >
+          <h2>{{ $coll.Name }}</h2>
+          <p>({{ $coll.CardCount }} cards)</p>
+        </div>
+        <div class="panel"></div>
+      {{ end }}
+    </form>
+  </section>
+{{ end }}

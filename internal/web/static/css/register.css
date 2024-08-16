@@ -1,0 +1,64 @@
+form {
+  background-color: var(--bg-2);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+form label {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--fg-2);
+  margin-bottom: 0.5rem;
+}
+
+form input[type="text"] {
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  width: 15rem;
+  color: #000;
+}
+
+form input[type="submit"] {
+  cursor: pointer;
+  width: max-content;
+  padding: 0.5rem 1.5rem;
+  font-weight: 700;
+  background-color: var(--bg-4);
+  color: var(--fg-4);
+}
+
+form .button {
+  background-color: var(--bg-3);
+  color: var(--fg-4);
+  font-weight: 700;
+}
+
+form textarea {
+  outline: none;
+  border: none;
+  resize: none;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  height: 3rem;
+  font-size: 1rem;
+  color: #000;
+}
+
+.action-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+p {
+  margin: 0 0 1rem 0;
+  color: var(--fg-2);
+}
+
+p.error {
+  font-weight: 700;
+  color: var(--error);
+}

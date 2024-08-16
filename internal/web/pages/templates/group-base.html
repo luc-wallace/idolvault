@@ -1,0 +1,27 @@
+{{ define "title" }}{{ .Group.Name }}{{ end }}
+{{ define "header" }}
+  <link rel="stylesheet" href="/static/css/tabs-switcher.css" />
+  <style>
+    img {
+      width: 320px;
+    }
+
+    .group-image {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 300px;
+      border-radius: 0.5rem;
+    }
+  </style>
+  {{ block "head" . }}{{ end }}
+{{ end }}
+{{ define "content" }}
+  <h1>{{ .Group.Name }} (Group)</h1>
+  <div class="tabs-switcher">
+    <a href="/groups/{{ .GroupID }}" class="{{ if .InfoPage }}selected{{ end }}">INFO</a>
+    <a href="/groups/{{ .GroupID }}/music" class="{{ if .MusicPage }}selected{{ end }}">MUSIC</a>
+    <a href="/groups/{{ .GroupID }}/cards" class="{{ if .CardsPage }}selected{{ end }}">CARDS</a>
+  </div>
+  <div class="tabs-content">{{ block "tab-content" . }}{{ end }}</div>
+{{ end }}

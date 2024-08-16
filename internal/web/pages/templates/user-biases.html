@@ -1,0 +1,36 @@
+{{ define "head" }}
+  <style>
+    .biases-container {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+  </style>
+{{ end }}
+
+{{ define "tab-content" }}
+  <section>
+    <h2>Bias</h2>
+    <div class="biases-container">
+      {{ if .Empty }}
+        {{ if .Self }}
+          <p>You have not chosen any biases.</p>
+        {{ else }}
+          <p>This user has not chosen any biases.</p>
+        {{ end }}
+      {{ else }}
+        {{ range $idol := .Biases }}
+          <a href="/groups/{{ $idol.GroupName }}/members/{{ $idol.StageName }}">
+            <h3>{{ $idol.StageName }}</h3>
+            <p>{{ $idol.GroupName }}</p>
+          </a>
+        {{ end }}
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

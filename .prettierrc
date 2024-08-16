@@ -1,0 +1,15 @@
+{
+  "semi": false,
+  "singleQuote": false,
+  "printWidth": 100,
+  "htmlWhitespaceSensitivity": "ignore",
+  "plugins": ["prettier-plugin-go-template"],
+  "overrides": [
+    {
+      "files": ["*.html"],
+      "options": {
+        "parser": "go-template"
+      }
+    }
+  ]
+}
