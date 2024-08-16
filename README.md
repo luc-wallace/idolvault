@@ -1,7 +1,7 @@
 # idolvault
 
 ### Your digital K-Pop Companion
-
+![Idolvault](site.png)
 # Features
 
 ### Photocards
