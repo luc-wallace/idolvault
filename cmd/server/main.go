@@ -33,17 +33,24 @@ func init() {
 func main() {
 	flag.Parse()
 
-	if dev {
-		fmt.Println("starting app in developer mode, omit the -dev flag for production mode")
-	} else {
-		fmt.Println("starting app in production mode, use the -dev flag for developer mode")
-	}
-
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("error loading .env file\n")
 	}
 	fmt.Println("loaded .env")
+
+	domain := os.Getenv("DOMAIN")
+	port := os.Getenv("PORT")
+
+	if dev {
+		fmt.Println("starting app in developer mode, omit the -dev flag for production mode")
+		domain = "localhost:" + port
+	} else {
+		fmt.Println("starting app in production mode, use the -dev flag for developer mode")
+		if domain == "" {
+			log.Fatal(".env file missing DOMAIN value")
+		}
+	}
 
 	ctx := context.Background()
 	conn, err := db.Connect(ctx, os.Getenv("POSTGRES_URI"))
@@ -67,22 +74,29 @@ func main() {
 	cookieStore.Options.Secure = !dev
 	gothic.Store = cookieStore
 
+	var baseCallbackURI string
+	if dev {
+		baseCallbackURI = "http://" + domain + "/auth/callback?provider="
+	} else {
+		baseCallbackURI = "https://" + domain + "/auth/callback?provider="
+	}
+
 	goth.UseProviders(
 		google.New(
 			os.Getenv("GOOGLE_CLIENT_ID"),
 			os.Getenv("GOOGLE_CLIENT_SECRET"),
-			"http://localhost:8080/auth/callback?provider=google",
+			baseCallbackURI+"google",
 		),
 		discord.New(
 			os.Getenv("DISCORD_CLIENT_ID"),
 			os.Getenv("DISCORD_CLIENT_SECRET"),
-			"http://localhost:8080/auth/callback?provider=discord",
+			baseCallbackURI+"discord",
 			discord.ScopeIdentify, discord.ScopeEmail,
 		),
 		spotifyauth.New(
 			os.Getenv("SPOTIFY_CLIENT_ID"),
 			os.Getenv("SPOTIFY_CLIENT_SECRET"),
-			"http://localhost:8080/auth/callback?provider=spotify",
+			baseCallbackURI+"spotify",
 		),
 	)
 
@@ -91,10 +105,10 @@ func main() {
 	sessionManager.Store = pgxstore.New(conn.Pool())
 	sessionManager.Cookie.Secure = !dev
 
-	fmt.Println("running on port 8080")
+	fmt.Println("running on port " + port)
 	r := web.New(conn, sessionManager)
 
-	if err := http.ListenAndServe(":8080", sessionManager.LoadAndSave(r)); err != nil {
+	if err := http.ListenAndServe(":"+port, sessionManager.LoadAndSave(r)); err != nil {
 		log.Fatal(err)
 	}
 }

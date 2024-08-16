@@ -1,7 +1,9 @@
 # idolvault
 
 ### Your digital K-Pop Companion
+
 ![Idolvault](site.png)
+
 # Features
 
 ### Photocards
@@ -26,17 +28,19 @@ Install Go 1.22.5 or higher.
 
 Create a PostgreSQL database with the structure found in `db_structure.sql`.
 
-Create a .env file in the project folder with the following structure:
+Create a .env file in the project folder with the following structure (replace with own values):
 
 ```
-POSTGRES_URI=
-SPOTIFY_CLIENT_ID=
-SPOTIFY_CLIENT_SECRET=
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-SESSION_SECRET=
-DISCORD_CLIENT_ID=
-DISCORD_CLIENT_SECRET=
+POSTGRES_URI=...
+SPOTIFY_CLIENT_ID=...
+SPOTIFY_CLIENT_SECRET=...
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+SESSION_SECRET=...
+DISCORD_CLIENT_ID=...
+DISCORD_CLIENT_SECRET=...
+PORT=8080
+DOMAIN=example.com
 ```
 
 Compile the code:
