@@ -32,6 +32,10 @@ func Mount(conn *db.Conn, sess *scs.SessionManager) *chi.Mux {
 
 	r.Use(util.UseDefaultParams(sess))
 	r.Get("/logout", p.Logout)
+	r.Group(func(r chi.Router) {
+		r.Use(util.CheckAuth(sess, false))
+		r.Post("/auth/users", p.PostUsers)
+	})
 
 	r.Group(func(r chi.Router) {
 		r.Use(util.RegisterRedirect(sess))
@@ -40,7 +44,6 @@ func Mount(conn *db.Conn, sess *scs.SessionManager) *chi.Mux {
 		// Unauthenticated only
 		r.Group(func(r chi.Router) {
 			r.Use(util.CheckAuth(sess, false))
-			r.Post("/auth/users", p.PostUsers)
 			r.Group(func(r chi.Router) {
 				r.Use(util.RegisterRedirect(sess))
 				r.Get("/login", p.GetLoginPage)
@@ -68,7 +71,6 @@ func Mount(conn *db.Conn, sess *scs.SessionManager) *chi.Mux {
 		r.Get("/users/{username}/cards", p.GetUserCardsPage)
 		r.Get("/users/{username}/bias", p.GetUserBiasesPage)
 		r.Get("/users/{username}/followers", p.GetUserFollowersPage)
-
 	})
 
 	r.NotFound(p.NotFoundHandler)
