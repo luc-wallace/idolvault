@@ -46,7 +46,7 @@ DOMAIN=example.com
 Compile the code:
 
 ```
-go build ./cmd/srver
+go build ./cmd/server
 ```
 
 Run the server (runs on port 8080):
