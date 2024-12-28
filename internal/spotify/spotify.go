@@ -14,9 +14,10 @@ import (
 )
 
 type SpotifyService struct {
-	client *spotify.Client
-	db     *db.Conn
-	config *clientcredentials.Config
+	client    *spotify.Client
+	db        *db.Conn
+	config    *clientcredentials.Config
+	expiresAt time.Time
 }
 
 func New(ctx context.Context, clientID string, clientSecret string, conn *db.Conn) (*SpotifyService, error) {
@@ -33,6 +34,7 @@ func New(ctx context.Context, clientID string, clientSecret string, conn *db.Con
 	if err != nil {
 		return nil, err
 	}
+	s.expiresAt = token.Expiry
 	return s, nil
 }
 
@@ -60,12 +62,16 @@ func (s *SpotifyService) Start(ctx context.Context) {
 }
 
 func (s *SpotifyService) refreshToken(ctx context.Context) {
+	expiresAt := s.expiresAt
 	for {
-		time.Sleep(59 * time.Minute)
+		sleepDuration := time.Until(expiresAt)
+		time.Sleep(time.Duration(sleepDuration.Seconds()-5) * time.Second)
+
 		token, err := s.config.Token(ctx)
 		if err != nil {
 			log.Printf("failed to fetch new spotify token: %v\n", token)
 		}
+		expiresAt = token.Expiry
 		httpClient := spotifyauth.New().Client(ctx, token)
 		s.client = spotify.New(httpClient)
 		fmt.Println("refreshed spotify token")
